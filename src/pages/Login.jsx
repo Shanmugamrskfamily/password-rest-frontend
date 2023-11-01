@@ -32,7 +32,7 @@ const Login = () => {
         const data = await response.json();
         const { token, userName, avatar } = data;
 
-        // Store user details in local storage
+        
         localStorage.setItem('token', token);
         localStorage.setItem('userName', userName);
         localStorage.setItem('avatar', avatar);

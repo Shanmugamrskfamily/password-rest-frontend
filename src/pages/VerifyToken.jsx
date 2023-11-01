@@ -1,4 +1,4 @@
-// VerifyToken.jsx
+
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ const VerifyToken = () => {
   const { token } = useParams();
 
   useEffect(() => {
-    // Verify token with the backend
+   
     fetch(`http://localhost:7000/api/verify-token/${token}`, {
       method: 'GET',
       headers: {
@@ -35,7 +35,7 @@ const VerifyToken = () => {
   return (
     <div>
       <h2>Verifying Token...</h2>
-      {/* You can add a loading spinner or other visual indicators here */}
+     
     </div>
   );
 };

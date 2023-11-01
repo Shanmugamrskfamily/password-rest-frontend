@@ -22,7 +22,7 @@ const ResetPassword = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, token }), // Include token in the request
+        body: JSON.stringify({ ...formData, token }), 
       });
 
       if (response.ok) {

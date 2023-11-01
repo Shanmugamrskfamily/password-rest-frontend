@@ -42,7 +42,7 @@ const Dashboard = () => {
                 <h4 className='mb-3'>Welcome {userName}😍</h4>
                 <p className="card-text">User ID: {userData.user.userId}</p>
                 <p className="card-text">User Email: {userData.user.email}</p>
-                {/* Add other user details as needed */}
+                
             </div>
           ) : (
             <p>Loading...</p>
