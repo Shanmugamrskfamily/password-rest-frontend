@@ -17,7 +17,7 @@ const ResetPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:7000/api/reset-password', {
+      const response = await fetch('https://password-reset-guvi.onrender.com/api/reset-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -38,8 +38,8 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Reset Password</h2>
+    <div className="container form-container text-white fw-bold m-5">
+      <h1 className='text-center'>Reset Password</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
@@ -54,9 +54,11 @@ const ResetPassword = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div className='text-center'>
+        <button type="submit" className="btn w-50 btn-submit btn-primary">
           Submit
         </button>
+        </div>
       </form>
     </div>
   );

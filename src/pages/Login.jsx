@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:7000/api/login', {
+      const response = await fetch('https://password-reset-guvi.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,8 +53,8 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Login</h2>
+    <div className="container form-container text-white fw-bold m-5">
+      <h1 className='text-center'>Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
@@ -82,14 +82,16 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div className='text-center'>
+        <button type="submit" className="btn btn-submit w-50 fw-bold btn-primary">
           Submit
         </button>
         <p className="mt-3">
-          <span className="text-primary" style={{ cursor: 'pointer' }} onClick={handleForgotPassword}>
+          <h5><span className="text-warning fw-bold" style={{ cursor: 'pointer' }} onClick={handleForgotPassword}>
             Forgot Password?
-          </span>
+          </span></h5>
         </p>
+        </div>
       </form>
     </div>
   );

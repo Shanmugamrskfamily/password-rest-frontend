@@ -9,7 +9,7 @@ const VerifyToken = () => {
 
   useEffect(() => {
    
-    fetch(`http://localhost:7000/api/verify-token/${token}`, {
+    fetch(`https://password-reset-guvi.onrender.com/api/verify-token/${token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -23,6 +23,7 @@ const VerifyToken = () => {
         } else {
           toast.error('Token verification failed. Please try again.');
           navigate('/login');
+          console.log(response);
         }
       })
       .catch((error) => {
@@ -33,8 +34,8 @@ const VerifyToken = () => {
   }, [ token]);
 
   return (
-    <div>
-      <h2>Verifying Token...</h2>
+    <div className='container m-5 form-container text-white fw-bold'>
+      <h1 className='text-center'>Verifying Token...</h1>
      
     </div>
   );

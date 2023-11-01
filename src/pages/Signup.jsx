@@ -20,7 +20,7 @@ const Signup = () => {
         useEffect(() => {
           const fetchAvatars = async () => {
             try {
-              const response = await fetch('http://localhost:7000/api/avatars');
+              const response = await fetch('https://password-reset-guvi.onrender.com/api/avatars');
               const data = await response.json();
               setAvatarList(data.avatars);
             } catch (error) {
@@ -56,7 +56,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:7000/api/signup', {
+      const response = await fetch('https://password-reset-guvi.onrender.com/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -80,8 +80,9 @@ const Signup = () => {
 
   return (
     <div className="container mt-5">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      
+      <form onSubmit={handleSubmit} className="fw-bold text-white form-container">
+      <h1 className='text-center mb-4'>Sign Up</h1>
         <div className="mb-3">
           <label htmlFor="userName" className="form-label">
             Username
@@ -154,9 +155,11 @@ const Signup = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <div className='text-center'>
+        <button type="submit" className="btn w-50 fw-bold btn-primary btn-submit">
           Submit
         </button>
+        </div>
       </form>
     </div>
   );

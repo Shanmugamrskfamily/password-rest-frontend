@@ -16,7 +16,7 @@ const Dashboard = () => {
       navigate('/login');
     } else {
       axios
-        .get('http://localhost:7000/api/protected-route', {
+        .get('https://password-reset-guvi.onrender.com/api/protected-route', {
           headers: {
             Authorization: token,
           },
@@ -33,10 +33,10 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Dashboard</h1>
+    <div className="container form-container text-center m-5">
+      <h1 className="mb-4 text-white">Dashboard</h1>
       <div className="card">
-        <div className="card-body">
+        <div className="card-body fw-bold">
           {userData ? (
             <div>
                 <h4 className='mb-3'>Welcome {userName}😍</h4>

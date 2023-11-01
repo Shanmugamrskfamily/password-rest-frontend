@@ -11,6 +11,9 @@ import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyToken from './pages/VerifyToken';
 import ResetPassword from './pages/ResetPassword';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   
@@ -18,7 +21,9 @@ function App() {
     <div className='App'>
     <Router>
       <ToastContainer />
+      <Header/>
       <Routes>
+      <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -26,6 +31,7 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
+        <Footer/>
         </Router>
     </div>
   )
