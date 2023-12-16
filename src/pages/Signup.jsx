@@ -1,36 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { RingLoader } from 'react-spinners'; // Import the spinner component
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Signup = () => {
-        const [formData, setFormData] = useState({
-          userName: '',
-          email: '',
-          password: '',
-          mobileNumber: '',
-          avatar: '' 
-        });
-        const navigate = useNavigate();
-        const [passwordError, setPasswordError] = useState('');
-        const [avatarList, setAvatarList] = useState([]);
-      
-        useEffect(() => {
-          const fetchAvatars = async () => {
-            try {
-              const response = await fetch('https://password-reset-guvi.onrender.com/api/avatars');
-              const data = await response.json();
-              setAvatarList(data.avatars);
-            } catch (error) {
-              console.error('Error:', error);
-              toast.error('Failed to fetch avatars');
-            }
-          };
-      
-          fetchAvatars();
-        }, []);
+  const [formData, setFormData] = useState({
+    userName: '',
+    email: '',
+    password: '',
+    mobileNumber: '',
+    avatar: '',
+  });
+  const [passwordError, setPasswordError] = useState('');
+  const [avatarList, setAvatarList] = useState([]);
+  const [loading, setLoading] = useState(false); 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAvatars = async () => {
+      try {
+        const response = await fetch('https://password-reset-guvi.onrender.com/api/avatars');
+        const data = await response.json();
+        setAvatarList(data.avatars);
+      } catch (error) {
+        console.error('Error:', error);
+        toast.error('Failed to fetch avatars');
+      }
+    };
+
+    fetchAvatars();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,33 +58,34 @@ const Signup = () => {
     }
 
     try {
+      setLoading(true); 
+
       const response = await fetch('https://password-reset-guvi.onrender.com/api/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // Sign-up success
         toast.success('Sign up successful');
         navigate('/login');
       } else {
-        // Sign-up failure
         toast.error('Sign up failed');
       }
     } catch (error) {
       console.error('Error:', error);
       toast.error('Something went wrong');
+    } finally {
+      setLoading(false); 
     }
   };
 
   return (
     <div className="container mt-5">
-      
       <form onSubmit={handleSubmit} className="fw-bold text-white form-container">
-      <h1 className='text-center mb-4'>Sign Up</h1>
+        <h1 className='text-center mb-4'>Sign Up</h1>
         <div className="mb-3">
           <label htmlFor="userName" className="form-label">
             Username
@@ -156,9 +159,13 @@ const Signup = () => {
           </select>
         </div>
         <div className='text-center'>
-        <button type="submit" className="btn w-50 fw-bold btn-primary btn-submit">
-          Submit
-        </button>
+          <button type="submit" className="btn w-50 fw-bold btn-primary btn-submit">
+            {loading ? (
+              <RingLoader color={'#36D7B7'} loading={loading} size={30} />
+            ) : (
+              'Submit'
+            )}
+          </button>
         </div>
       </form>
     </div>

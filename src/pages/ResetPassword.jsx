@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { RingLoader } from 'react-spinners'; // Import the spinner component
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
     newPassword: '',
   });
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
   const { token } = useParams();
 
@@ -17,6 +19,16 @@ const ResetPassword = () => {
     e.preventDefault();
 
     try {
+      setLoading(true); 
+
+      // Password validation
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(formData.newPassword)) {
+        toast.error('Password must be at least 8 characters with 1 uppercase letter, 1 number, and 1 special character');
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch('https://password-reset-guvi.onrender.com/api/reset-password', {
         method: 'PUT',
         headers: {
@@ -34,6 +46,8 @@ const ResetPassword = () => {
     } catch (error) {
       console.error('Error:', error);
       toast.error('Something went wrong');
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -55,9 +69,13 @@ const ResetPassword = () => {
           />
         </div>
         <div className='text-center'>
-        <button type="submit" className="btn w-50 btn-submit btn-primary">
-          Submit
-        </button>
+          <button type="submit" className="btn w-50 btn-submit btn-primary">
+            {loading ? (
+              <RingLoader color={'#36D7B7'} loading={loading} size={30} />
+            ) : (
+              'Submit'
+            )}
+          </button>
         </div>
       </form>
     </div>

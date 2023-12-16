@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { RingLoader } from 'react-spinners'; // Import the spinner component
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -10,6 +11,7 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,6 +22,8 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      setLoading(true); // Set loading to true when the request is initiated
+
       const response = await fetch('https://password-reset-guvi.onrender.com/api/login', {
         method: 'POST',
         headers: {
@@ -32,7 +36,6 @@ const Login = () => {
         const data = await response.json();
         const { token, userName, avatar } = data;
 
-        
         localStorage.setItem('token', token);
         localStorage.setItem('userName', userName);
         localStorage.setItem('avatar', avatar);
@@ -45,6 +48,8 @@ const Login = () => {
     } catch (error) {
       console.error('Error:', error);
       toast.error('Something went wrong');
+    } finally {
+      setLoading(false); // Set loading to false when the request is complete
     }
   };
 
@@ -83,14 +88,20 @@ const Login = () => {
           />
         </div>
         <div className='text-center'>
-        <button type="submit" className="btn btn-submit w-50 fw-bold btn-primary">
-          Submit
-        </button>
-        <p className="mt-3">
-          <h5><span className="text-warning fw-bold" style={{ cursor: 'pointer' }} onClick={handleForgotPassword}>
-            Forgot Password?
-          </span></h5>
-        </p>
+          <button type="submit" className="btn btn-submit w-50 fw-bold btn-primary">
+            {loading ? (
+              <RingLoader color={'#36D7B7'} loading={loading} size={30} />
+            ) : (
+              'Submit'
+            )}
+          </button>
+          <p className="mt-3">
+            <h5>
+              <span className="text-warning fw-bold" style={{ cursor: 'pointer' }} onClick={handleForgotPassword}>
+                Forgot Password?
+              </span>
+            </h5>
+          </p>
         </div>
       </form>
     </div>
